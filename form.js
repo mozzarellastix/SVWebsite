@@ -5,12 +5,26 @@ dataForm.addEventListener("submit", (e) => {
     e.preventDefault();
     
     let rpm;
-    let temperature; 
+    let temperatureC; 
+    let temperatureF;
     let cup;
     let cone; 
 
     let loaded = document.getElementById('loaded').checked;
     let unloaded = document.getElementById('unloaded').checked;
+
+    let speedElement = document.getElementById("speed");
+    let temperatureElementC = document.getElementById("tempResult");
+    let temperatureElementF = document.getElementById("tempResultF");
+    let coneElement = document.getElementById("coneResult");
+    let cupElement = document.getElementById("cupResult");
+
+    //reset strings for next submit call
+    speedElement.innerText = "";
+    temperatureElementC.innerText = "";
+    temperatureElementF.innerText = "";
+    coneElement.innerText = "";
+    cupElement.innerText = "";
 
     console.log("loaded:" + loaded);
     console.log("unloaded: " + unloaded);
@@ -40,13 +54,16 @@ dataForm.addEventListener("submit", (e) => {
     if (document.getElementById("healthy").checked){
         //if loaded was selected, calculate temperature 100
         if (loaded){
-            temperature = (0.0704 * rpm) + 5.355;
-            console.log("temperature 100: " + temperature);
+            temperatureC = (0.0704 * rpm) + 5.355;
         }
         else{
-            temperature = (0.0622 * rpm) - 3.618;
-            console.log("temperature 17: " + temperature);
+            temperatureC = (0.0622 * rpm) - 3.618;
         }
+        temperatureF = (temperatureC * (9/5)) + 32;
+        
+        temperatureElementC.innerText = temperatureC;
+        temperatureElementF.innerText = temperatureF;
+
     }
 
     else if (document.getElementById("defective").checked){
@@ -58,17 +75,19 @@ dataForm.addEventListener("submit", (e) => {
             cup = (0.0615 * rpm) - 3.8473;
             cone = (0.072 * rpm) - 2.994;
         }
+        coneElement.innerText = cone;
+        cupElement.innerText = cup;
     }
 
-    let speedElement = document.getElementById("speed");
-    let temperatureElement = document.getElementById("tempResult");
-    let coneElement = document.getElementById("coneResult");
-    let cupElement = document.getElementById("cupResult");
+    //Reset the values for the next submit
+    rpm = 0;
+    temperatureC = 0;
+    temperatureF = 0;
+    cone = 0;
+    cup = 0;
 
     speedElement.innerText = rpm;
-    temperatureElement.innerText = temperature;
-    coneElement.innerText = cone;
-    cupElement.innerText = cup;
+
     //check which dropdown was selected. 
     //if mph, convert the mph to rpm
     //if kmph, convert the kmph to rpm

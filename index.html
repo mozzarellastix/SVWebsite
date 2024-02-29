@@ -49,16 +49,11 @@
 
 
         </fieldset>
-        <!--Convert mph or kmph to rpm
-            If possible, only show one depending on which one the user wants to input.    
-        -->
-        <!-- <label for ="rpmInput">Speed (RPM): </label>
-        <input type="text" id="rpmInput" name="rpmInput"/>
-        <br> -->
 
     <fieldset onchange="check()">
         <input type="radio" id="healthy" name="healthyOrDefective" value="healthy">
         <label for="healthy">Healthy</label>
+
         <input type="radio" id="defective" name="healthyOrDefective" value="defective">
         <label for="defective">Defective</label>
     </fieldset>
@@ -66,19 +61,28 @@
     <fieldset id="spallInput" style="display:none">
         <label for="spallSize">Size of the spall in inches</label>
         <input type="text" id="spallSize">
-        
     </fieldset>
 
     <fieldset>
         <button type="submit">Submit</button>
     </fieldset>
+
     </form>
     
-
-    <h3>Speed converted to RPM:</h3> <p id="speed"></p> 
-    <p>Note: Ambient temp is 25C</p>
+    <div id="speedResults" style="display:none">
+        <h3>Speed converted to RPM:</h3> <p id="speed"></p> 
+    </div>
+    
     <div id="healthyResults" style="display:none">
-        <h3> Temperature Control: </h3> <p id="tempResult"> </p> 
+        <p>Note: Ambient temp is 25C</p>
+        <h3> Temperature Control: </h3> 
+        <div id = "celsius">
+            <p id="tempResult" style="display: inline"> </p> <p style="display: inline">℃</p> 
+        </div>
+        <br>
+        <div id = "fahrenheit">
+            <p style="display: inline" id="tempResultF"></p> <p style="display: inline">℉</p>
+        </div>
     </div>
     
     <div id= "defectiveResults" class="defectiveResults" style="display:none">
