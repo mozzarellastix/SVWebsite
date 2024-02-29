@@ -1,0 +1,15 @@
+input{
+    margin:10px;
+}
+
+label{
+    font-size: large;
+}
+
+button{
+    text-align: center;
+}
+
+legend{
+    font-size: large;
+}
