@@ -16,6 +16,10 @@ dataForm.addEventListener("submit", (e) => {
     let speedElement = document.getElementById("speed");
     let temperatureElementC = document.getElementById("tempResult");
     let temperatureElementF = document.getElementById("tempResultF");
+
+    let temperatureElementC2 = document.getElementById("tempResult2");
+    let temperatureElementF2 = document.getElementById("tempResultF2");
+
     let coneElement = document.getElementById("coneResult");
     let cupElement = document.getElementById("cupResult");
 
@@ -70,11 +74,18 @@ dataForm.addEventListener("submit", (e) => {
         if (loaded){
             cup = (0.0659 * rpm) + 8.1054;
             cone = (0.0859 * rpm) + 2.1146;
+            temperatureC = (0.0704 * rpm) + 5.355;
         }
         else if (unloaded){
             cup = (0.0615 * rpm) - 3.8473;
             cone = (0.072 * rpm) - 2.994;
+            temperatureC = (0.0622 * rpm) - 3.618;
         }
+        temperatureF = (temperatureC * (9/5)) + 32;
+        console.log("tempc:" + temperatureC);
+        console.log("tempf:" + temperatureF);
+        temperatureElementC2.innerText = temperatureC;
+        temperatureElementF2.innerText = temperatureF;
         coneElement.innerText = cone;
         cupElement.innerText = cup;
     }
