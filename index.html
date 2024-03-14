@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
+    
     <link rel="stylesheet" href="stylesheet.css"> 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+
 </head>
+
 <body style="background-color: bisque;">
     
     <script src="functions.js"></script>
     <form action="" id="dataForm" onsubmit="unhide()">
-        
+    
         <!-- Drop down menu to see if they want loaded (100%) or unloaded(17%) 
         Based on this, the temp control for that load will be displayed.  
         -->
@@ -41,12 +48,11 @@
             -->
 
             <label for ="speedInput">Speed: </label>
-            <input type="text" id="speedInput" name="kmphInput"/> 
+            <input type="text" id="speedInput" class= "inputBox" name="kmphInput"/> 
             <select id="unitSelected">
                 <option value="mph">mph</option>
                 <option value="kmph">kmph</option>
             </select>
-
 
         </fieldset>
 
@@ -59,8 +65,17 @@
     </fieldset>
 
     <fieldset id="spallInput" style="display:none">
+
+        <input type="radio" id="cup" name="cupOrCone" value="cup">
+        <label for="cup">Cup</label>
+
+        <input type="radio" id="cone" name="cupOrCone" value="cone">
+        <label for="cone">Cone</label>
+
+        <br>
+
         <label for="spallSize">Size of the spall in inches</label>
-        <input type="text" id="spallSize">
+        <input type="text" class="inputBox"id="spallSize">
     </fieldset>
 
     <fieldset>
@@ -74,22 +89,44 @@
     </div>
     
     <div id="healthyResults" style="display:none">
-        <p>Note: Ambient temp is 25C</p>
         <h3> Temperature Control: </h3> 
+        <p>Note: Ambient temp is 25℃</p>
         <div id = "celsius">
             <p id="tempResult" style="display: inline"> </p> <p style="display: inline">℃</p> 
         </div>
         <br>
         <div id = "fahrenheit">
-            <p style="display: inline" id="tempResultF"></p> <p style="display: inline">℉</p>
+            <p style="display: inline" id="tempResultF"></p> <p style="display:          inline">℉</p>
         </div>
+
+        <!-- <button id="buttonPdf" onclick="downloadPDF()">Download</button> -->
+
+        <script>
+            function downloadPDF() {
+                const {jsPDF} = window.jspdf;
+                var doc = new jsPDF();
+                doc.text(100, 20, "Results for data inputted");
+                doc.text(10,30, document.getElementById("speed").innerHTML);
+                doc.save("new File34.pdf");
+                // window.jsPDF = window.jspdf.jsPDF;
+
+                // console.log("This function is running.");
+                // var pdf = new jsPDF('p', 'pt', 'a4');
+                // var buttonPdf =document.getElementById('buttonPdf');
+            }
+        </script>
     </div>
     
     <div id= "defectiveResults" class="defectiveResults" style="display:none">
-        <h3>Cone: </h3> <p id="coneResult"></p>
-        <h3>Cup: </h3> <p id="cupResult"></p>
+        <!-- Only show cone/cup depending on what they chose. -->
+        <div id = "coneResults">
+            <h3>Cone: </h3> <p id="coneResult"></p>
+        </div>
+        <div id="cupResults">
+            <h3>Cup: </h3> <p id="cupResult"></p>
+        </div>
 
-        <p>Note: Ambient temp is 25C</p>
+        <p>Note: Ambient temp is 25℃</p>
         <h3> Temperature Control: </h3> 
         <div id = "celsius">
             <p id="tempResult2" style="display: inline"> </p> <p style="display: inline">℃</p> 
@@ -99,6 +136,8 @@
         <div id = "fahrenheit">
             <p style="display: inline" id="tempResultF2"></p> <p style="display: inline">℉</p>
         </div>
+        
+        <button id="buttonPdf" onclick="downloadPDF()">Download</button>
 
     </div>
 
