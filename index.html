@@ -87,58 +87,69 @@
     <div id="speedResults" style="display:none">
         <h3>Speed converted to RPM:</h3> <p id="speed"></p> 
     </div>
-    
-    <div id="healthyResults" style="display:none">
-        <h3> Temperature Control: </h3> 
-        <p>Note: Ambient temp is 25℃</p>
-        <div id = "celsius">
-            <p id="tempResult" style="display: inline"> </p> <p style="display: inline">℃</p> 
-        </div>
-        <br>
-        <div id = "fahrenheit">
-            <p style="display: inline" id="tempResultF"></p> <p style="display:          inline">℉</p>
-        </div>
 
-        <!-- <button id="buttonPdf" onclick="downloadPDF()">Download</button> -->
+    <div id="capture">
 
-        <script>
-            function downloadPDF() {
-                const {jsPDF} = window.jspdf;
-                var doc = new jsPDF();
-                doc.text(100, 20, "Results for data inputted");
-                doc.text(10,30, document.getElementById("speed").innerHTML);
-                doc.save("new File34.pdf");
-                // window.jsPDF = window.jspdf.jsPDF;
+        <div id="healthyResults" style="display:none">
+            <h3> Temperature Control: </h3> 
+            <p>Note: Ambient temp is 25℃</p>
+            <div id = "celsius">
+                <p id="tempResult" style="display: inline"> </p> <p style="display: inline">℃</p> 
+            </div>
+            <br>
+            <div id = "fahrenheit">
+                <p style="display: inline" id="tempResultF"></p> <p style="display:          inline">℉</p>
+            </div>
 
-                // console.log("This function is running.");
-                // var pdf = new jsPDF('p', 'pt', 'a4');
-                // var buttonPdf =document.getElementById('buttonPdf');
-            }
-        </script>
-    </div>
-    
-    <div id= "defectiveResults" class="defectiveResults" style="display:none">
-        <!-- Only show cone/cup depending on what they chose. -->
-        <div id = "coneResults">
-            <h3>Cone: </h3> <p id="coneResult"></p>
-        </div>
-        <div id="cupResults">
-            <h3>Cup: </h3> <p id="cupResult"></p>
-        </div>
+            <button id="buttonPdf" data-html2canvas-ignore = "true" onclick="downloadPDF()">Download results as PDF</button>
 
-        <p>Note: Ambient temp is 25℃</p>
-        <h3> Temperature Control: </h3> 
-        <div id = "celsius">
-            <p id="tempResult2" style="display: inline"> </p> <p style="display: inline">℃</p> 
-        </div>
+            <script>
+                function downloadPDF() {
+                    const captureElement = document.querySelector("#capture");
 
-        <br>
-        <div id = "fahrenheit">
-            <p style="display: inline" id="tempResultF2"></p> <p style="display: inline">℉</p>
+                    html2canvas(captureElement,{quality: 3}).then((canvas) => {
+                        // Get the image data as a base64-encoded string
+                        const imageData = canvas.toDataURL("image/png");
+                        const {jsPDF} = window.jspdf;
+                        var doc = new jsPDF();
+
+                        var imgWidth = 300;
+                        var imgHeight = canvas.height * imgWidth / canvas.width;
+                        doc.addImage(imageData, 'PNG', 0, 0, imgWidth, imgHeight, 'results', 'NONE');
+                        doc.save("Results.pdf");
+                });
+
+                // doc.text(100, 20, "Results for data inputted");
+                // // doc.addImage(img)
+                // // doc.text(10,30, document.getElementById("speed").innerHTML);
+                // doc.save("new File34.pdf");
+                }
+            </script>
         </div>
         
-        <button id="buttonPdf" onclick="downloadPDF()">Download</button>
+        <div id= "defectiveResults" class="defectiveResults" style="display:none">
+            <!-- Only show cone/cup depending on what they chose. -->
+            <div id = "coneResults">
+                <h3>Cone: </h3> <p id="coneResult"></p>
+            </div>
+            <div id="cupResults">
+                <h3>Cup: </h3> <p id="cupResult"></p>
+            </div>
 
+            <p>Note: Ambient temp is 25℃</p>
+            <h3> Temperature Control: </h3> 
+            <div id = "celsius">
+                <p id="tempResult2" style="display: inline"> </p> <p style="display: inline">℃</p> 
+            </div>
+
+            <br>
+            <div id = "fahrenheit">
+                <p style="display: inline" id="tempResultF2"></p> <p style="display: inline">℉</p>
+            </div>
+            
+            <button id="buttonPdf" data-html2canvas-ignore = "true" onclick="downloadPDF()">Download results as PDF</button>
+
+        </div>
     </div>
 
     <!--
